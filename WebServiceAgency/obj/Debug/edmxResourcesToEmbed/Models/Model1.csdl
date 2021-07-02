@@ -1,0 +1,271 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="TravelAgencyDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="Briefcase">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" />
+    <Property Name="name" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
+    <Property Name="description" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
+    <Property Name="price" Type="Double" />
+    <Property Name="Travels_id" Type="Int32" Nullable="false" />
+    <Property Name="city_id" Type="Int32" />
+    <NavigationProperty Name="City" Relationship="Self.FK__Briefcase__city___4CA06362" FromRole="Briefcase" ToRole="City" />
+    <NavigationProperty Name="Travels" Relationship="Self.FK__Travels__briefca__4BAC3F29" FromRole="Briefcase" ToRole="Travels" />
+    <NavigationProperty Name="Services" Relationship="Self.Briefcase_has_Services" FromRole="Briefcase" ToRole="Services" />
+  </EntityType>
+  <EntityType Name="City">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="name" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
+    <Property Name="description" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
+    <Property Name="Department_id" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Briefcases" Relationship="Self.FK__Briefcase__city___4CA06362" FromRole="City" ToRole="Briefcase" />
+    <NavigationProperty Name="Department" Relationship="Self.FK__City__Department__239E4DCF" FromRole="City" ToRole="Department" />
+    <NavigationProperty Name="Travels" Relationship="Self.FK__Travels__arrival__35BCFE0A" FromRole="City" ToRole="Travels" />
+    <NavigationProperty Name="Travels1" Relationship="Self.FK__Travels__originC__34C8D9D1" FromRole="City" ToRole="Travels" />
+  </EntityType>
+  <EntityType Name="client">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="fullName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="email" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
+    <Property Name="phone" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
+    <Property Name="gender" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+    <Property Name="address" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="client_has_Travels" Relationship="Self.FK__client_ha__clien__38996AB5" FromRole="client" ToRole="client_has_Travels" />
+  </EntityType>
+  <EntityType Name="client_has_Travels">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="client_id" Type="Int32" Nullable="false" />
+    <Property Name="Travels_id" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="client" Relationship="Self.FK__client_ha__clien__38996AB5" FromRole="client_has_Travels" ToRole="client" />
+    <NavigationProperty Name="Travel" Relationship="Self.FK__client_ha__Trave__398D8EEE" FromRole="client_has_Travels" ToRole="Travels" />
+  </EntityType>
+  <EntityType Name="Country">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="name" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
+    <Property Name="description" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="Departments" Relationship="Self.FK__Departmen__Count__20C1E124" FromRole="Country" ToRole="Department" />
+  </EntityType>
+  <EntityType Name="Department">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="name" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
+    <Property Name="description" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
+    <Property Name="Country_id" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Cities" Relationship="Self.FK__City__Department__239E4DCF" FromRole="Department" ToRole="City" />
+    <NavigationProperty Name="Country" Relationship="Self.FK__Departmen__Count__20C1E124" FromRole="Department" ToRole="Country" />
+  </EntityType>
+  <EntityType Name="Service">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="name" Type="String" MaxLength="45" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="descripcion" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
+    <Property Name="image" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="ServiceType_id" Type="Int32" Nullable="false" />
+    <Property Name="Price" Type="Double" />
+    <NavigationProperty Name="ServiceType" Relationship="Self.FK__Services__Servic__2C3393D0" FromRole="Services" ToRole="ServiceType" />
+    <NavigationProperty Name="Briefcases" Relationship="Self.Briefcase_has_Services" FromRole="Services" ToRole="Briefcase" />
+  </EntityType>
+  <EntityType Name="ServiceType">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" />
+    <Property Name="name" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="Services" Relationship="Self.FK__Services__Servic__2C3393D0" FromRole="ServiceType" ToRole="Services" />
+  </EntityType>
+  <EntityType Name="Travel">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="startDate" Type="DateTime" />
+    <Property Name="endDate" Type="DateTime" />
+    <Property Name="originCity_id" Type="Int32" Nullable="false" />
+    <Property Name="arrivalCity_id" Type="Int32" Nullable="false" />
+    <Property Name="briefcase_id" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Briefcase" Relationship="Self.FK__Travels__briefca__4BAC3F29" FromRole="Travels" ToRole="Briefcase" />
+    <NavigationProperty Name="City" Relationship="Self.FK__Travels__arrival__35BCFE0A" FromRole="Travels" ToRole="City" />
+    <NavigationProperty Name="City1" Relationship="Self.FK__Travels__originC__34C8D9D1" FromRole="Travels" ToRole="City" />
+    <NavigationProperty Name="client_has_Travels" Relationship="Self.FK__client_ha__Trave__398D8EEE" FromRole="Travels" ToRole="client_has_Travels" />
+  </EntityType>
+  <Association Name="FK__Briefcase__city___4CA06362">
+    <End Role="City" Type="Self.City" Multiplicity="0..1" />
+    <End Role="Briefcase" Type="Self.Briefcase" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="City">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="Briefcase">
+        <PropertyRef Name="city_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Travels__briefca__4BAC3F29">
+    <End Role="Briefcase" Type="Self.Briefcase" Multiplicity="1" />
+    <End Role="Travels" Type="Self.Travel" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Briefcase">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="Travels">
+        <PropertyRef Name="briefcase_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__City__Department__239E4DCF">
+    <End Role="Department" Type="Self.Department" Multiplicity="1" />
+    <End Role="City" Type="Self.City" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Department">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="City">
+        <PropertyRef Name="Department_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Travels__arrival__35BCFE0A">
+    <End Role="City" Type="Self.City" Multiplicity="1" />
+    <End Role="Travels" Type="Self.Travel" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="City">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="Travels">
+        <PropertyRef Name="arrivalCity_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Travels__originC__34C8D9D1">
+    <End Role="City" Type="Self.City" Multiplicity="1" />
+    <End Role="Travels" Type="Self.Travel" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="City">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="Travels">
+        <PropertyRef Name="originCity_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__client_ha__clien__38996AB5">
+    <End Role="client" Type="Self.client" Multiplicity="1" />
+    <End Role="client_has_Travels" Type="Self.client_has_Travels" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="client">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="client_has_Travels">
+        <PropertyRef Name="client_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__client_ha__Trave__398D8EEE">
+    <End Role="Travels" Type="Self.Travel" Multiplicity="1" />
+    <End Role="client_has_Travels" Type="Self.client_has_Travels" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Travels">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="client_has_Travels">
+        <PropertyRef Name="Travels_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Departmen__Count__20C1E124">
+    <End Role="Country" Type="Self.Country" Multiplicity="1" />
+    <End Role="Department" Type="Self.Department" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Country">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="Department">
+        <PropertyRef Name="Country_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Services__Servic__2C3393D0">
+    <End Role="ServiceType" Type="Self.ServiceType" Multiplicity="1" />
+    <End Role="Services" Type="Self.Service" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ServiceType">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="Services">
+        <PropertyRef Name="ServiceType_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="Briefcase_has_Services">
+    <End Role="Briefcase" Type="Self.Briefcase" Multiplicity="*" />
+    <End Role="Services" Type="Self.Service" Multiplicity="*" />
+  </Association>
+  <EntityContainer Name="TravelAgencyDBEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Briefcases" EntityType="Self.Briefcase" />
+    <EntitySet Name="Cities" EntityType="Self.City" />
+    <EntitySet Name="clients" EntityType="Self.client" />
+    <EntitySet Name="client_has_Travels" EntityType="Self.client_has_Travels" />
+    <EntitySet Name="Countries" EntityType="Self.Country" />
+    <EntitySet Name="Departments" EntityType="Self.Department" />
+    <EntitySet Name="Services" EntityType="Self.Service" />
+    <EntitySet Name="ServiceTypes" EntityType="Self.ServiceType" />
+    <EntitySet Name="Travels" EntityType="Self.Travel" />
+    <AssociationSet Name="FK__Briefcase__city___4CA06362" Association="Self.FK__Briefcase__city___4CA06362">
+      <End Role="City" EntitySet="Cities" />
+      <End Role="Briefcase" EntitySet="Briefcases" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Travels__briefca__4BAC3F29" Association="Self.FK__Travels__briefca__4BAC3F29">
+      <End Role="Briefcase" EntitySet="Briefcases" />
+      <End Role="Travels" EntitySet="Travels" />
+    </AssociationSet>
+    <AssociationSet Name="FK__City__Department__239E4DCF" Association="Self.FK__City__Department__239E4DCF">
+      <End Role="Department" EntitySet="Departments" />
+      <End Role="City" EntitySet="Cities" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Travels__arrival__35BCFE0A" Association="Self.FK__Travels__arrival__35BCFE0A">
+      <End Role="City" EntitySet="Cities" />
+      <End Role="Travels" EntitySet="Travels" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Travels__originC__34C8D9D1" Association="Self.FK__Travels__originC__34C8D9D1">
+      <End Role="City" EntitySet="Cities" />
+      <End Role="Travels" EntitySet="Travels" />
+    </AssociationSet>
+    <AssociationSet Name="FK__client_ha__clien__38996AB5" Association="Self.FK__client_ha__clien__38996AB5">
+      <End Role="client" EntitySet="clients" />
+      <End Role="client_has_Travels" EntitySet="client_has_Travels" />
+    </AssociationSet>
+    <AssociationSet Name="FK__client_ha__Trave__398D8EEE" Association="Self.FK__client_ha__Trave__398D8EEE">
+      <End Role="Travels" EntitySet="Travels" />
+      <End Role="client_has_Travels" EntitySet="client_has_Travels" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Departmen__Count__20C1E124" Association="Self.FK__Departmen__Count__20C1E124">
+      <End Role="Country" EntitySet="Countries" />
+      <End Role="Department" EntitySet="Departments" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Services__Servic__2C3393D0" Association="Self.FK__Services__Servic__2C3393D0">
+      <End Role="ServiceType" EntitySet="ServiceTypes" />
+      <End Role="Services" EntitySet="Services" />
+    </AssociationSet>
+    <AssociationSet Name="Briefcase_has_Services" Association="Self.Briefcase_has_Services">
+      <End Role="Briefcase" EntitySet="Briefcases" />
+      <End Role="Services" EntitySet="Services" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

@@ -1,0 +1,58 @@
+﻿@model TravelAgency.Models.Travel
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Travel</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.startDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.startDate)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.endDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.endDate)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Briefcase.name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Briefcase.name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.City.name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.City.name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.City1.name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.City1.name)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>
