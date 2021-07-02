@@ -80,3 +80,4 @@ C:\Users\jhond\source\repos\TravelAgency\TravelAgency\obj\Debug\TravelAgency.csp
 C:\Users\jhond\source\repos\TravelAgency\TravelAgency\obj\Debug\TravelAgency.csproj.CopyComplete
 C:\Users\jhond\source\repos\TravelAgency\TravelAgency\obj\Debug\TravelAgency.dll
 C:\Users\jhond\source\repos\TravelAgency\TravelAgency\obj\Debug\TravelAgency.pdb
+C:\Users\jhond\source\repos\TravelAgency\TravelAgency\obj\Debug\TravelAgency.csproj.AssemblyReference.cache
