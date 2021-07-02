@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TravelAgency", "TravelAgenc
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebServiceAgency", "WebServiceAgency\WebServiceAgency.csproj", "{0EAAFF0B-04AC-4386-B6E3-4B7834A4C67E}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AgencyLibrary", "AgencyLibrary\AgencyLibrary.csproj", "{5C756CD6-7302-4772-A1D7-9F1D04A5E099}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{0EAAFF0B-04AC-4386-B6E3-4B7834A4C67E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0EAAFF0B-04AC-4386-B6E3-4B7834A4C67E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0EAAFF0B-04AC-4386-B6E3-4B7834A4C67E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5C756CD6-7302-4772-A1D7-9F1D04A5E099}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5C756CD6-7302-4772-A1D7-9F1D04A5E099}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5C756CD6-7302-4772-A1D7-9F1D04A5E099}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5C756CD6-7302-4772-A1D7-9F1D04A5E099}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

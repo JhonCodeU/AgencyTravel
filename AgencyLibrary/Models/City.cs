@@ -2,9 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
-using WebServiceAgency.Models;
 
-namespace TravelAgency.Models
+namespace AgencyLibrary.Models
 {
     public class City
     {

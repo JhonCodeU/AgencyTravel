@@ -1,0 +1,5 @@
+C:\Users\jhond\source\repos\TravelAgency\AgencyLibrary\bin\Debug\AgencyLibrary.dll
+C:\Users\jhond\source\repos\TravelAgency\AgencyLibrary\bin\Debug\AgencyLibrary.pdb
+C:\Users\jhond\source\repos\TravelAgency\AgencyLibrary\obj\Debug\AgencyLibrary.csproj.CoreCompileInputs.cache
+C:\Users\jhond\source\repos\TravelAgency\AgencyLibrary\obj\Debug\AgencyLibrary.dll
+C:\Users\jhond\source\repos\TravelAgency\AgencyLibrary\obj\Debug\AgencyLibrary.pdb
