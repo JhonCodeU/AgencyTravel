@@ -87,3 +87,6 @@ C:\Users\jhond\source\repos\TravelAgency\WebServiceAgency\obj\Release\WebService
 C:\Users\jhond\source\repos\TravelAgency\WebServiceAgency\obj\Release\WebServiceAgency.csproj.CopyComplete
 C:\Users\jhond\source\repos\TravelAgency\WebServiceAgency\obj\Release\WebServiceAgency.dll
 C:\Users\jhond\source\repos\TravelAgency\WebServiceAgency\obj\Release\WebServiceAgency.pdb
+C:\Users\jhond\source\repos\TravelAgency\WebServiceAgency\bin\AgencyData.dll
+C:\Users\jhond\source\repos\TravelAgency\WebServiceAgency\bin\AgencyData.pdb
+C:\Users\jhond\source\repos\TravelAgency\WebServiceAgency\bin\AgencyData.dll.config

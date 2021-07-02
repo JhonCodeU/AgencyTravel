@@ -176,48 +176,6 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Models\Briefcase.cs">
-      <DependentUpon>ModelDE.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\City.cs">
-      <DependentUpon>ModelDE.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\client.cs">
-      <DependentUpon>ModelDE.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\client_has_Travels.cs">
-      <DependentUpon>ModelDE.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\Country.cs">
-      <DependentUpon>ModelDE.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\Department.cs">
-      <DependentUpon>ModelDE.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\ModelDE.Context.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>ModelDE.Context.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\ModelDE.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>ModelDE.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\ModelDE.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>ModelDE.edmx</DependentUpon>
-    </Compile>
-    <Compile Include="Models\Service.cs">
-      <DependentUpon>ModelDE.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\ServiceType.cs">
-      <DependentUpon>ModelDE.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\Travel.cs">
-      <DependentUpon>ModelDE.tt</DependentUpon>
-    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -229,16 +187,6 @@
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
-    <Content Include="Models\ModelDE.Context.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>ModelDE.Context.cs</LastGenOutput>
-      <DependentUpon>ModelDE.edmx</DependentUpon>
-    </Content>
-    <Content Include="Models\ModelDE.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>ModelDE.edmx</DependentUpon>
-      <LastGenOutput>ModelDE.cs</LastGenOutput>
-    </Content>
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Areas\HelpPage\Views\Web.config" />
@@ -260,13 +208,6 @@
     <Content Include="Areas\HelpPage\Views\Help\DisplayTemplates\CollectionModelDescription.cshtml" />
     <Content Include="Areas\HelpPage\Views\Help\DisplayTemplates\ApiGroup.cshtml" />
     <Content Include="Areas\HelpPage\Views\Help\Api.cshtml" />
-    <EntityDeploy Include="Models\ModelDE.edmx">
-      <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>ModelDE.Designer.cs</LastGenOutput>
-    </EntityDeploy>
-    <Content Include="Models\ModelDE.edmx.diagram">
-      <DependentUpon>ModelDE.edmx</DependentUpon>
-    </Content>
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />
@@ -322,6 +263,12 @@
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\AgencyData\AgencyData.csproj">
+      <Project>{AF61168B-FE9B-410D-AEF9-92F17F9D2C0F}</Project>
+      <Name>AgencyData</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

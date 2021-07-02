@@ -50,6 +50,7 @@ C:\Users\jhond\source\repos\TravelAgency\WebServiceAgency\bin\roslyn\vbc.exe.con
 C:\Users\jhond\source\repos\TravelAgency\WebServiceAgency\bin\roslyn\vbc.rsp
 C:\Users\jhond\source\repos\TravelAgency\WebServiceAgency\bin\roslyn\VBCSCompiler.exe
 C:\Users\jhond\source\repos\TravelAgency\WebServiceAgency\bin\roslyn\VBCSCompiler.exe.config
+C:\Users\jhond\source\repos\TravelAgency\WebServiceAgency\bin\AgencyData.dll
 C:\Users\jhond\source\repos\TravelAgency\WebServiceAgency\bin\Antlr3.Runtime.dll
 C:\Users\jhond\source\repos\TravelAgency\WebServiceAgency\bin\EntityFramework.dll
 C:\Users\jhond\source\repos\TravelAgency\WebServiceAgency\bin\EntityFramework.SqlServer.dll
@@ -67,6 +68,8 @@ C:\Users\jhond\source\repos\TravelAgency\WebServiceAgency\bin\System.Web.WebPage
 C:\Users\jhond\source\repos\TravelAgency\WebServiceAgency\bin\System.Web.WebPages.dll
 C:\Users\jhond\source\repos\TravelAgency\WebServiceAgency\bin\System.Web.WebPages.Razor.dll
 C:\Users\jhond\source\repos\TravelAgency\WebServiceAgency\bin\WebGrease.dll
+C:\Users\jhond\source\repos\TravelAgency\WebServiceAgency\bin\AgencyData.pdb
+C:\Users\jhond\source\repos\TravelAgency\WebServiceAgency\bin\AgencyData.dll.config
 C:\Users\jhond\source\repos\TravelAgency\WebServiceAgency\bin\EntityFramework.xml
 C:\Users\jhond\source\repos\TravelAgency\WebServiceAgency\bin\EntityFramework.SqlServer.xml
 C:\Users\jhond\source\repos\TravelAgency\WebServiceAgency\bin\Newtonsoft.Json.xml
@@ -82,8 +85,8 @@ C:\Users\jhond\source\repos\TravelAgency\WebServiceAgency\bin\System.Web.WebPage
 C:\Users\jhond\source\repos\TravelAgency\WebServiceAgency\bin\System.Web.WebPages.Razor.xml
 C:\Users\jhond\source\repos\TravelAgency\WebServiceAgency\bin\Antlr3.Runtime.pdb
 C:\Users\jhond\source\repos\TravelAgency\WebServiceAgency\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
+C:\Users\jhond\source\repos\TravelAgency\WebServiceAgency\obj\Debug\WebServiceAgency.csproj.AssemblyReference.cache
 C:\Users\jhond\source\repos\TravelAgency\WebServiceAgency\obj\Debug\WebServiceAgency.csproj.CoreCompileInputs.cache
 C:\Users\jhond\source\repos\TravelAgency\WebServiceAgency\obj\Debug\WebServiceAgency.csproj.CopyComplete
 C:\Users\jhond\source\repos\TravelAgency\WebServiceAgency\obj\Debug\WebServiceAgency.dll
 C:\Users\jhond\source\repos\TravelAgency\WebServiceAgency\obj\Debug\WebServiceAgency.pdb
-C:\Users\jhond\source\repos\TravelAgency\WebServiceAgency\obj\Debug\WebServiceAgency.csproj.AssemblyReference.cache

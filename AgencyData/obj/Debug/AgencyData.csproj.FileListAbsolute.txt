@@ -1,0 +1,11 @@
+C:\Users\jhond\source\repos\TravelAgency\AgencyData\bin\Debug\AgencyData.dll.config
+C:\Users\jhond\source\repos\TravelAgency\AgencyData\bin\Debug\AgencyData.dll
+C:\Users\jhond\source\repos\TravelAgency\AgencyData\bin\Debug\AgencyData.pdb
+C:\Users\jhond\source\repos\TravelAgency\AgencyData\bin\Debug\EntityFramework.dll
+C:\Users\jhond\source\repos\TravelAgency\AgencyData\bin\Debug\EntityFramework.SqlServer.dll
+C:\Users\jhond\source\repos\TravelAgency\AgencyData\bin\Debug\EntityFramework.xml
+C:\Users\jhond\source\repos\TravelAgency\AgencyData\bin\Debug\EntityFramework.SqlServer.xml
+C:\Users\jhond\source\repos\TravelAgency\AgencyData\obj\Debug\AgencyData.csproj.CoreCompileInputs.cache
+C:\Users\jhond\source\repos\TravelAgency\AgencyData\obj\Debug\AgencyData.csproj.CopyComplete
+C:\Users\jhond\source\repos\TravelAgency\AgencyData\obj\Debug\AgencyData.dll
+C:\Users\jhond\source\repos\TravelAgency\AgencyData\obj\Debug\AgencyData.pdb

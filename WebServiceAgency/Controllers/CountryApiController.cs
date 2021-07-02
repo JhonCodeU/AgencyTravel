@@ -1,4 +1,5 @@
-﻿using System;
+﻿using AgencyData;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
@@ -8,13 +9,12 @@ using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 using System.Web.Http.Description;
-using WebServiceAgency.Models;
 
 namespace WebServiceAgency.Controllers
 {
     public class CountryApiController : ApiController
     {
-        private TravelAgencyDBEntitiesDBB db = new TravelAgencyDBEntitiesDBB();
+        private TravelAgencyDBEntities db = new TravelAgencyDBEntities();
 
         // GET: api/Country
         public IQueryable<Country> GetCountries()
