@@ -1,4 +1,4 @@
-﻿@model TravelAgency.Models.City
+﻿@model AgencyLibrary.Models.City
 
 @{
     ViewBag.Title = "Create";
@@ -34,7 +34,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.Department_id, "Department_id", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.DropDownList("Department_id", null, htmlAttributes: new { @class = "form-control" })
+                @Html.EditorFor(model => model.Department_id, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.Department_id, "", new { @class = "text-danger" })
             </div>
         </div>

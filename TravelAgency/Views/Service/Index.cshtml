@@ -21,7 +21,7 @@
             @Html.DisplayNameFor(model => model.image)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.ServiceType.name)
+            @Html.DisplayNameFor(model => model.ServiceType_id)
         </th>
         <th></th>
     </tr>
@@ -38,7 +38,7 @@
             @Html.DisplayFor(modelItem => item.image)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.ServiceType.name)
+            @Html.DisplayFor(modelItem => item.ServiceType_id)
         </td>
         <td>
             @Html.ActionLink("Edit", "Edit", new { id=item.id }) |

@@ -18,13 +18,13 @@
             @Html.DisplayNameFor(model => model.endDate)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Briefcase.name)
+            @Html.DisplayNameFor(model => model.briefcase_id)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.City.name)
+            @Html.DisplayNameFor(model => model.originCity_id)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.City1.name)
+            @Html.DisplayNameFor(model => model.arrivalCity_id)
         </th>
         <th></th>
     </tr>
@@ -38,13 +38,13 @@
             @Html.DisplayFor(modelItem => item.endDate)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.Briefcase.name)
+            @Html.DisplayFor(modelItem => item.briefcase_id)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.City.name)
+            @Html.DisplayFor(modelItem => item.originCity_id)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.City1.name)
+            @Html.DisplayFor(modelItem => item.arrivalCity_id)
         </td>
         <td>
             @Html.ActionLink("Edit", "Edit", new { id=item.id }) |
