@@ -1,4 +1,7 @@
-﻿using System;
+﻿using AgencyLibrary.Models;
+using Newtonsoft.Json;
+using RestSharp;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
@@ -6,18 +9,32 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
-using TravelAgency.Models;
 
 namespace TravelAgency.Controllers
 {
     public class clientController : Controller
     {
-        private TravelAgencyDBEntities db = new TravelAgencyDBEntities();
-
+        private const string URL = "http://localhost:81/servicio_ucaldas/api/";
         // GET: client
+
+        public Client SearchClient(int? id)
+        {
+            var client = new RestClient(URL + "ClientApi/" + id);
+            var request = new RestRequest(RestSharp.Method.GET);
+            var response = client.Execute(request);
+            var data = response.Content;
+            Client clientOb = JsonConvert.DeserializeObject<Client>(data);
+
+            return clientOb;
+        }
         public ActionResult Index()
         {
-            return View(db.clients.ToList());
+            var client = new RestClient(URL + "ClientApi/");
+            var request = new RestRequest(RestSharp.Method.GET);
+            var response = client.Execute(request);
+            var data = response.Content;
+            var dataJson = JsonConvert.DeserializeObject<List<Client>>(data);
+            return View(dataJson);
         }
 
         // GET: client/Details/5
@@ -27,7 +44,7 @@ namespace TravelAgency.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            client client = db.clients.Find(id);
+            Client client = this.SearchClient(id);
             if (client == null)
             {
                 return HttpNotFound();
@@ -46,12 +63,15 @@ namespace TravelAgency.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "id,fullName,email,phone,gender,address")] client client)
+        public ActionResult Create([Bind(Include = "id,fullName,email,phone,gender,address")] Client client)
         {
             if (ModelState.IsValid)
             {
-                db.clients.Add(client);
-                db.SaveChanges();
+                var clientUrl = new RestClient(URL + "ClientApi");
+                var request = new RestRequest(RestSharp.Method.POST);
+                request.AddHeader("Content-Type", "application/json");
+                request.AddParameter("", JsonConvert.SerializeObject(client), ParameterType.RequestBody);
+                var response = clientUrl.Execute(request);//
                 return RedirectToAction("Index");
             }
 
@@ -65,7 +85,7 @@ namespace TravelAgency.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            client client = db.clients.Find(id);
+            Client client = this.SearchClient(id);
             if (client == null)
             {
                 return HttpNotFound();
@@ -78,13 +98,15 @@ namespace TravelAgency.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "id,fullName,email,phone,gender,address")] client client)
+        public ActionResult Edit([Bind(Include = "id,fullName,email,phone,gender,address")] Client client)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(client).State = EntityState.Modified;
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                var clientUrl = new RestClient(URL + "travelApi" + client.id);
+                var request = new RestRequest(RestSharp.Method.PUT);
+                request.AddHeader("Content-Type", "application/json");
+                request.AddParameter("", JsonConvert.SerializeObject(client), ParameterType.RequestBody);
+                var response = clientUrl.Execute(request);//
             }
             return View(client);
         }
@@ -96,7 +118,7 @@ namespace TravelAgency.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            client client = db.clients.Find(id);
+            Client client = this.SearchClient(id);
             if (client == null)
             {
                 return HttpNotFound();
@@ -109,19 +131,10 @@ namespace TravelAgency.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            client client = db.clients.Find(id);
-            db.clients.Remove(client);
-            db.SaveChanges();
+            var client = new RestClient(URL + "ClientApi" + id);
+            var request = new RestRequest(RestSharp.Method.PUT);
+            var response = client.Execute(request);//
             return RedirectToAction("Index");
-        }
-
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing)
-            {
-                db.Dispose();
-            }
-            base.Dispose(disposing);
         }
     }
 }

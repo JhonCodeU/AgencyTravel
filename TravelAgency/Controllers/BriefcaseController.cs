@@ -1,4 +1,7 @@
-﻿using System;
+﻿using AgencyLibrary.Models;
+using Newtonsoft.Json;
+using RestSharp;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
@@ -6,18 +9,32 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
-using TravelAgency.Models;
 
 namespace TravelAgency.Controllers
 {
     public class BriefcaseController : Controller
     {
-        private TravelAgencyDBEntities db = new TravelAgencyDBEntities();
-
+        private const string URL = "http://localhost:81/servicio_ucaldas/api/";
         // GET: Briefcase
+
+        public Briefcase SearchBriefcase(int? id)
+        {
+            var client = new RestClient(URL + "BriefcaseApi/" + id);
+            var request = new RestRequest(RestSharp.Method.GET);
+            var response = client.Execute(request);
+            var data = response.Content;
+            Briefcase travel = JsonConvert.DeserializeObject<Briefcase>(data);
+
+            return travel;
+        }
         public ActionResult Index()
         {
-            return View(db.Briefcases.ToList());
+            var client = new RestClient(URL + "BriefcaseApi/");
+            var request = new RestRequest(RestSharp.Method.GET);
+            var response = client.Execute(request);
+            var data = response.Content;
+            var dataJson = JsonConvert.DeserializeObject<List<Briefcase>>(data);
+            return View(dataJson);
         }
 
         // GET: Briefcase/Details/5
@@ -27,7 +44,7 @@ namespace TravelAgency.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Briefcase briefcase = db.Briefcases.Find(id);
+            Briefcase briefcase = this.SearchBriefcase(id);
             if (briefcase == null)
             {
                 return HttpNotFound();
@@ -50,8 +67,11 @@ namespace TravelAgency.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.Briefcases.Add(briefcase);
-                db.SaveChanges();
+                var client = new RestClient(URL + "BriefcaseApi");
+                var request = new RestRequest(RestSharp.Method.POST);
+                request.AddHeader("Content-Type", "application/json");
+                request.AddParameter("", JsonConvert.SerializeObject(briefcase), ParameterType.RequestBody);
+                var response = client.Execute(request);//
                 return RedirectToAction("Index");
             }
 
@@ -65,7 +85,7 @@ namespace TravelAgency.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Briefcase briefcase = db.Briefcases.Find(id);
+            Briefcase briefcase = SearchBriefcase(id);
             if (briefcase == null)
             {
                 return HttpNotFound();
@@ -82,9 +102,12 @@ namespace TravelAgency.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.Entry(briefcase).State = EntityState.Modified;
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                var client = new RestClient(URL + "BriefcaseApi" + briefcase.id);
+                var request = new RestRequest(RestSharp.Method.PUT);
+                request.AddHeader("Content-Type", "application/json");
+                request.AddParameter("", JsonConvert.SerializeObject(briefcase), ParameterType.RequestBody);
+                var response = client.Execute(request);//
+
             }
             return View(briefcase);
         }
@@ -96,7 +119,7 @@ namespace TravelAgency.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Briefcase briefcase = db.Briefcases.Find(id);
+            Briefcase briefcase = this.SearchBriefcase(id);
             if (briefcase == null)
             {
                 return HttpNotFound();
@@ -109,19 +132,10 @@ namespace TravelAgency.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            Briefcase briefcase = db.Briefcases.Find(id);
-            db.Briefcases.Remove(briefcase);
-            db.SaveChanges();
+            var client = new RestClient(URL + "BriefcaseApi" + id);
+            var request = new RestRequest(RestSharp.Method.PUT);
+            var response = client.Execute(request);//
             return RedirectToAction("Index");
-        }
-
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing)
-            {
-                db.Dispose();
-            }
-            base.Dispose(disposing);
         }
     }
 }

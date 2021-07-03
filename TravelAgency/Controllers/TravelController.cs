@@ -1,4 +1,7 @@
-﻿using System;
+﻿using AgencyData;
+using Newtonsoft.Json;
+using RestSharp;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
@@ -6,19 +9,31 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
-using TravelAgency.Models;
 
 namespace TravelAgency.Controllers
 {
     public class TravelController : Controller
     {
-        private TravelAgencyDBEntities db = new TravelAgencyDBEntities();
-
+        private const string URL = "http://localhost:81/servicio_ucaldas/api/";
         // GET: Travel
+        public Travel SearchTravel(int? id)
+        {
+            var client = new RestClient(URL + "TravelApi/" + id);
+            var request = new RestRequest(RestSharp.Method.GET);
+            var response = client.Execute(request);
+            var data = response.Content;
+            Travel travel = JsonConvert.DeserializeObject<Travel>(data);
+
+            return travel;
+        }
         public ActionResult Index()
         {
-            var travels = db.Travels.Include(t => t.Briefcase).Include(t => t.City).Include(t => t.City1);
-            return View(travels.ToList());
+            var client = new RestClient(URL + "TravelApi/");
+            var request = new RestRequest(RestSharp.Method.GET);
+            var response = client.Execute(request);
+            var data = response.Content;
+            var dataJson = JsonConvert.DeserializeObject<List<Travel>>(data);
+            return View(dataJson);
         }
 
         // GET: Travel/Details/5
@@ -28,7 +43,7 @@ namespace TravelAgency.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Travel travel = db.Travels.Find(id);
+            Travel travel = SearchTravel(id);
             if (travel == null)
             {
                 return HttpNotFound();
@@ -39,9 +54,6 @@ namespace TravelAgency.Controllers
         // GET: Travel/Create
         public ActionResult Create()
         {
-            ViewBag.briefcase_id = new SelectList(db.Briefcases, "id", "name");
-            ViewBag.arrivalCity_id = new SelectList(db.Cities, "id", "name");
-            ViewBag.originCity_id = new SelectList(db.Cities, "id", "name");
             return View();
         }
 
@@ -54,14 +66,14 @@ namespace TravelAgency.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.Travels.Add(travel);
-                db.SaveChanges();
+                var client = new RestClient(URL + "TravelApi");
+                var request = new RestRequest(RestSharp.Method.POST);
+                request.AddHeader("Content-Type", "application/json");
+                request.AddParameter("", JsonConvert.SerializeObject(travel), ParameterType.RequestBody);
+                var response = client.Execute(request);//
                 return RedirectToAction("Index");
             }
 
-            ViewBag.briefcase_id = new SelectList(db.Briefcases, "id", "name", travel.briefcase_id);
-            ViewBag.arrivalCity_id = new SelectList(db.Cities, "id", "name", travel.arrivalCity_id);
-            ViewBag.originCity_id = new SelectList(db.Cities, "id", "name", travel.originCity_id);
             return View(travel);
         }
 
@@ -72,14 +84,14 @@ namespace TravelAgency.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Travel travel = db.Travels.Find(id);
+            Travel travel = this.SearchTravel(id);
             if (travel == null)
             {
                 return HttpNotFound();
             }
-            ViewBag.briefcase_id = new SelectList(db.Briefcases, "id", "name", travel.briefcase_id);
-            ViewBag.arrivalCity_id = new SelectList(db.Cities, "id", "name", travel.arrivalCity_id);
-            ViewBag.originCity_id = new SelectList(db.Cities, "id", "name", travel.originCity_id);
+            //ViewBag.briefcase_id = new SelectList(db.Briefcases, "id", "name", travel.briefcase_id);
+            //ViewBag.arrivalCity_id = new SelectList(db.Cities, "id", "name", travel.arrivalCity_id);
+            //ViewBag.originCity_id = new SelectList(db.Cities, "id", "name", travel.originCity_id);
             return View(travel);
         }
 
@@ -92,13 +104,15 @@ namespace TravelAgency.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.Entry(travel).State = EntityState.Modified;
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                var client = new RestClient(URL + "travelApi" + travel.id);
+                var request = new RestRequest(RestSharp.Method.PUT);
+                request.AddHeader("Content-Type", "application/json");
+                request.AddParameter("", JsonConvert.SerializeObject(travel), ParameterType.RequestBody);
+                var response = client.Execute(request);//
             }
-            ViewBag.briefcase_id = new SelectList(db.Briefcases, "id", "name", travel.briefcase_id);
-            ViewBag.arrivalCity_id = new SelectList(db.Cities, "id", "name", travel.arrivalCity_id);
-            ViewBag.originCity_id = new SelectList(db.Cities, "id", "name", travel.originCity_id);
+            //ViewBag.briefcase_id = new SelectList(db.Briefcases, "id", "name", travel.briefcase_id);
+            //ViewBag.arrivalCity_id = new SelectList(db.Cities, "id", "name", travel.arrivalCity_id);
+            //ViewBag.originCity_id = new SelectList(db.Cities, "id", "name", travel.originCity_id);
             return View(travel);
         }
 
@@ -109,7 +123,7 @@ namespace TravelAgency.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Travel travel = db.Travels.Find(id);
+            Travel travel = this.SearchTravel(id);
             if (travel == null)
             {
                 return HttpNotFound();
@@ -122,19 +136,10 @@ namespace TravelAgency.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            Travel travel = db.Travels.Find(id);
-            db.Travels.Remove(travel);
-            db.SaveChanges();
+            var client = new RestClient(URL + "travelApi" + id);
+            var request = new RestRequest(RestSharp.Method.PUT);
+            var response = client.Execute(request);//
             return RedirectToAction("Index");
-        }
-
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing)
-            {
-                db.Dispose();
-            }
-            base.Dispose(disposing);
         }
     }
 }

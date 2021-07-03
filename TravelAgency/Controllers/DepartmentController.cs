@@ -1,4 +1,7 @@
-﻿using System;
+﻿using AgencyLibrary.Models;
+using Newtonsoft.Json;
+using RestSharp;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
@@ -6,19 +9,32 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
-using TravelAgency.Models;
 
 namespace TravelAgency.Controllers
 {
     public class DepartmentController : Controller
     {
-        private TravelAgencyDBEntities db = new TravelAgencyDBEntities();
+        private const string URL = "http://localhost:81/servicio_ucaldas/api/";
 
         // GET: Department
+        public Department SearchDepartment(int? id)
+        {
+            var client = new RestClient(URL + "DepartmentApi/" + id);
+            var request = new RestRequest(RestSharp.Method.GET);
+            var response = client.Execute(request);
+            var data = response.Content;
+            Department department = JsonConvert.DeserializeObject<Department>(data);
+
+            return department;
+        }
         public ActionResult Index()
         {
-            var departments = db.Departments.Include(d => d.Country);
-            return View(departments.ToList());
+            var client = new RestClient(URL + "DepartmentApi/");
+            var request = new RestRequest(RestSharp.Method.GET);
+            var response = client.Execute(request);
+            var data = response.Content;
+            var dataJson = JsonConvert.DeserializeObject<List<Department>>(data);
+            return View(dataJson);
         }
 
         // GET: Department/Details/5
@@ -28,7 +44,7 @@ namespace TravelAgency.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Department department = db.Departments.Find(id);
+            Department department = this.SearchDepartment(id);
             if (department == null)
             {
                 return HttpNotFound();
@@ -39,7 +55,7 @@ namespace TravelAgency.Controllers
         // GET: Department/Create
         public ActionResult Create()
         {
-            ViewBag.Country_id = new SelectList(db.Countries, "id", "name");
+            //ViewBag.Country_id = new SelectList(db.Countries, "id", "name");
             return View();
         }
 
@@ -52,12 +68,15 @@ namespace TravelAgency.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.Departments.Add(department);
-                db.SaveChanges();
+                var client = new RestClient(URL + "DepartmentApi");
+                var request = new RestRequest(RestSharp.Method.POST);
+                request.AddHeader("Content-Type", "application/json");
+                request.AddParameter("", JsonConvert.SerializeObject(department), ParameterType.RequestBody);
+                var response = client.Execute(request);//
                 return RedirectToAction("Index");
             }
 
-            ViewBag.Country_id = new SelectList(db.Countries, "id", "name", department.Country_id);
+            //ViewBag.Country_id = new SelectList(db.Countries, "id", "name", department.Country_id);
             return View(department);
         }
 
@@ -68,12 +87,12 @@ namespace TravelAgency.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Department department = db.Departments.Find(id);
+            Department department = this.SearchDepartment(id);
             if (department == null)
             {
                 return HttpNotFound();
             }
-            ViewBag.Country_id = new SelectList(db.Countries, "id", "name", department.Country_id);
+            //ViewBag.Country_id = new SelectList(db.Countries, "id", "name", department.Country_id);
             return View(department);
         }
 
@@ -86,11 +105,13 @@ namespace TravelAgency.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.Entry(department).State = EntityState.Modified;
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                var client = new RestClient(URL + "departmentApi" + department.id);
+                var request = new RestRequest(RestSharp.Method.PUT);
+                request.AddHeader("Content-Type", "application/json");
+                request.AddParameter("", JsonConvert.SerializeObject(department), ParameterType.RequestBody);
+                var response = client.Execute(request);//
             }
-            ViewBag.Country_id = new SelectList(db.Countries, "id", "name", department.Country_id);
+            //ViewBag.Country_id = new SelectList(db.Countries, "id", "name", department.Country_id);
             return View(department);
         }
 
@@ -101,7 +122,7 @@ namespace TravelAgency.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Department department = db.Departments.Find(id);
+            Department department = this.SearchDepartment(id);
             if (department == null)
             {
                 return HttpNotFound();
@@ -114,19 +135,10 @@ namespace TravelAgency.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            Department department = db.Departments.Find(id);
-            db.Departments.Remove(department);
-            db.SaveChanges();
+            var client = new RestClient(URL + "DepartmentApi" + id);
+            var request = new RestRequest(RestSharp.Method.PUT);
+            var response = client.Execute(request);//
             return RedirectToAction("Index");
-        }
-
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing)
-            {
-                db.Dispose();
-            }
-            base.Dispose(disposing);
         }
     }
 }

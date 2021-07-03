@@ -52,6 +52,9 @@
       <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="RestSharp, Version=106.11.7.0, Culture=neutral, PublicKeyToken=598062e77f915f75, processorArchitecture=MSIL">
+      <HintPath>..\packages\RestSharp.106.11.7\lib\net452\RestSharp.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
@@ -245,6 +248,14 @@
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\AgencyData\AgencyData.csproj">
+      <Project>{AF61168B-FE9B-410D-AEF9-92F17F9D2C0F}</Project>
+      <Name>AgencyData</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\AgencyLibrary\AgencyLibrary.csproj">
+      <Project>{5C756CD6-7302-4772-A1D7-9F1D04A5E099}</Project>
+      <Name>AgencyLibrary</Name>
+    </ProjectReference>
     <ProjectReference Include="..\WebServiceAgency\WebServiceAgency.csproj">
       <Project>{0EAAFF0B-04AC-4386-B6E3-4B7834A4C67E}</Project>
       <Name>WebServiceAgency</Name>
