@@ -18,8 +18,6 @@ namespace AgencyData
         public TravelAgencyDBEntities()
             : base("name=TravelAgencyDBEntities")
         {
-            this.Configuration.LazyLoadingEnabled = false;
-            this.Configuration.ProxyCreationEnabled = false;
         }
     
         protected override void OnModelCreating(DbModelBuilder modelBuilder)

@@ -8,7 +8,6 @@
     <Property Name="name" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
     <Property Name="description" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
     <Property Name="price" Type="Double" />
-    <Property Name="Travels_id" Type="Int32" Nullable="false" />
     <Property Name="city_id" Type="Int32" />
     <NavigationProperty Name="City" Relationship="Self.FK__Briefcase__city___4CA06362" FromRole="Briefcase" ToRole="City" />
     <NavigationProperty Name="Travels" Relationship="Self.FK__Travels__briefca__4BAC3F29" FromRole="Briefcase" ToRole="Travels" />

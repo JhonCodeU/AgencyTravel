@@ -8,7 +8,6 @@
           <ScalarProperty Name="name" ColumnName="name" />
           <ScalarProperty Name="description" ColumnName="description" />
           <ScalarProperty Name="price" ColumnName="price" />
-          <ScalarProperty Name="Travels_id" ColumnName="Travels_id" />
           <ScalarProperty Name="city_id" ColumnName="city_id" />
         </MappingFragment>
       </EntityTypeMapping>

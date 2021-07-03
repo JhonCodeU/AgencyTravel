@@ -8,7 +8,6 @@
     <Property Name="name" Type="varchar" MaxLength="45" />
     <Property Name="description" Type="varchar" MaxLength="45" />
     <Property Name="price" Type="float" />
-    <Property Name="Travels_id" Type="int" Nullable="false" />
     <Property Name="city_id" Type="int" />
   </EntityType>
   <EntityType Name="Briefcase_has_Services">

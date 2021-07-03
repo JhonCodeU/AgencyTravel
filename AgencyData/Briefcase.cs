@@ -25,7 +25,6 @@ namespace AgencyData
         public string name { get; set; }
         public string description { get; set; }
         public Nullable<double> price { get; set; }
-        public int Travels_id { get; set; }
         public Nullable<int> city_id { get; set; }
     
         public virtual City City { get; set; }

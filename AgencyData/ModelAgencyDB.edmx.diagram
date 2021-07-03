@@ -5,7 +5,7 @@
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
       <Diagram DiagramId="543a638c77384f90ad675d50fd2a98ba" Name="Diagram1">
-        <EntityTypeShape EntityType="TravelAgencyDBModel.Briefcase" Width="1.5" PointX="7.5" PointY="4.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="TravelAgencyDBModel.Briefcase" Width="1.5" PointX="7.5" PointY="4.375" IsExpanded="true" />
         <EntityTypeShape EntityType="TravelAgencyDBModel.City" Width="1.5" PointX="5.25" PointY="4.625" IsExpanded="true" />
         <EntityTypeShape EntityType="TravelAgencyDBModel.client" Width="1.5" PointX="12.75" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="TravelAgencyDBModel.client_has_Travels" Width="1.5" PointX="15" PointY="5" IsExpanded="true" />
