@@ -1,4 +1,7 @@
-﻿using System;
+﻿using AgencyLibrary.Models;
+using Newtonsoft.Json;
+using RestSharp;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
@@ -6,18 +9,32 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
-using TravelAgency.Models;
 
 namespace TravelAgency.Controllers
 {
     public class CountryController : Controller
     {
-        private TravelAgencyDBEntities db = new TravelAgencyDBEntities();
-
+        private const string URL = "http://localhost:81/servicio_ucaldas/api/";
         // GET: Country
+
+        public Country SearchCountry(int? id)
+        {
+            var client = new RestClient(URL + "TravelApi/" + id);
+            var request = new RestRequest(RestSharp.Method.GET);
+            var response = client.Execute(request);
+            var data = response.Content;
+            Country country = JsonConvert.DeserializeObject<Country>(data);
+
+            return country;
+        }
         public ActionResult Index()
         {
-            return View(db.Countries.ToList());
+            var client = new RestClient(URL + "CountryApi/");
+            var request = new RestRequest(RestSharp.Method.GET);
+            var response = client.Execute(request);
+            var data = response.Content;
+            var dataJson = JsonConvert.DeserializeObject<List<Country>>(data);
+            return View(dataJson);
         }
 
         // GET: Country/Details/5
@@ -27,7 +44,7 @@ namespace TravelAgency.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Country country = db.Countries.Find(id);
+            Country country = this.SearchCountry(id);
             if (country == null)
             {
                 return HttpNotFound();
@@ -50,8 +67,11 @@ namespace TravelAgency.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.Countries.Add(country);
-                db.SaveChanges();
+                var client = new RestClient(URL + "CountryApi");
+                var request = new RestRequest(RestSharp.Method.POST);
+                request.AddHeader("Content-Type", "application/json");
+                request.AddParameter("", JsonConvert.SerializeObject(country), ParameterType.RequestBody);
+                var response = client.Execute(request);//
                 return RedirectToAction("Index");
             }
 
@@ -65,7 +85,7 @@ namespace TravelAgency.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Country country = db.Countries.Find(id);
+            Country country = this.SearchCountry(id);
             if (country == null)
             {
                 return HttpNotFound();
@@ -82,9 +102,11 @@ namespace TravelAgency.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.Entry(country).State = EntityState.Modified;
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                var client = new RestClient(URL + "CountryApi" + country.id);
+                var request = new RestRequest(RestSharp.Method.PUT);
+                request.AddHeader("Content-Type", "application/json");
+                request.AddParameter("", JsonConvert.SerializeObject(country), ParameterType.RequestBody);
+                var response = client.Execute(request);//
             }
             return View(country);
         }
@@ -96,7 +118,7 @@ namespace TravelAgency.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Country country = db.Countries.Find(id);
+            Country country = this.SearchCountry(id);
             if (country == null)
             {
                 return HttpNotFound();
@@ -109,19 +131,10 @@ namespace TravelAgency.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            Country country = db.Countries.Find(id);
-            db.Countries.Remove(country);
-            db.SaveChanges();
+            var client = new RestClient(URL + "CountryApi" + id);
+            var request = new RestRequest(RestSharp.Method.PUT);
+            var response = client.Execute(request);//
             return RedirectToAction("Index");
-        }
-
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing)
-            {
-                db.Dispose();
-            }
-            base.Dispose(disposing);
         }
     }
 }

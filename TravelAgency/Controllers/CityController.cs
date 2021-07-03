@@ -1,4 +1,7 @@
-﻿using System;
+﻿using AgencyLibrary.Models;
+using Newtonsoft.Json;
+using RestSharp;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
@@ -6,19 +9,32 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
-using TravelAgency.Models;
 
 namespace TravelAgency.Controllers
 {
     public class CityController : Controller
     {
-        private TravelAgencyDBEntities db = new TravelAgencyDBEntities();
-
+        private const string URL = "http://localhost-webservices.com/api/";
         // GET: City
+
+        public City SearchCity(int? id)
+        {
+            var client = new RestClient(URL + "CityApi/" + id);
+            var request = new RestRequest(RestSharp.Method.GET);
+            var response = client.Execute(request);
+            var data = response.Content;
+            City city = JsonConvert.DeserializeObject<City>(data);
+
+            return city;
+        }
         public ActionResult Index()
         {
-            var cities = db.Cities.Include(c => c.Department);
-            return View(cities.ToList());
+            var client = new RestClient(URL + "CityApi/");
+            var request = new RestRequest(RestSharp.Method.GET);
+            var response = client.Execute(request);
+            var data = response.Content;
+            var dataJson = JsonConvert.DeserializeObject<List<City>>(data);
+            return View(dataJson);
         }
 
         // GET: City/Details/5
@@ -28,7 +44,7 @@ namespace TravelAgency.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            City city = db.Cities.Find(id);
+            City city = this.SearchCity(id);
             if (city == null)
             {
                 return HttpNotFound();
@@ -39,7 +55,7 @@ namespace TravelAgency.Controllers
         // GET: City/Create
         public ActionResult Create()
         {
-            ViewBag.Department_id = new SelectList(db.Departments, "id", "name");
+            //ViewBag.Department_id = new SelectList(db.Departments, "id", "name");
             return View();
         }
 
@@ -52,12 +68,15 @@ namespace TravelAgency.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.Cities.Add(city);
-                db.SaveChanges();
+                var client = new RestClient(URL + "CityApi");
+                var request = new RestRequest(RestSharp.Method.POST);
+                request.AddHeader("Content-Type", "application/json");
+                request.AddParameter("", JsonConvert.SerializeObject(city), ParameterType.RequestBody);
+                var response = client.Execute(request);//
                 return RedirectToAction("Index");
             }
 
-            ViewBag.Department_id = new SelectList(db.Departments, "id", "name", city.Department_id);
+            //ViewBag.Department_id = new SelectList(db.Departments, "id", "name", city.Department_id);
             return View(city);
         }
 
@@ -68,12 +87,12 @@ namespace TravelAgency.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            City city = db.Cities.Find(id);
+            City city = this.SearchCity(id);
             if (city == null)
             {
                 return HttpNotFound();
             }
-            ViewBag.Department_id = new SelectList(db.Departments, "id", "name", city.Department_id);
+            //ViewBag.Department_id = new SelectList(db.Departments, "id", "name", city.Department_id);
             return View(city);
         }
 
@@ -86,11 +105,14 @@ namespace TravelAgency.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.Entry(city).State = EntityState.Modified;
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                var client = new RestClient(URL + "CityApi" + city.id);
+                var request = new RestRequest(RestSharp.Method.PUT);
+                request.AddHeader("Content-Type", "application/json");
+                request.AddParameter("", JsonConvert.SerializeObject(city), ParameterType.RequestBody);
+                var response = client.Execute(request);//
+
             }
-            ViewBag.Department_id = new SelectList(db.Departments, "id", "name", city.Department_id);
+            //ViewBag.Department_id = new SelectList(db.Departments, "id", "name", city.Department_id);
             return View(city);
         }
 
@@ -101,7 +123,7 @@ namespace TravelAgency.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            City city = db.Cities.Find(id);
+            City city = this.SearchCity(id);
             if (city == null)
             {
                 return HttpNotFound();
@@ -114,19 +136,10 @@ namespace TravelAgency.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            City city = db.Cities.Find(id);
-            db.Cities.Remove(city);
-            db.SaveChanges();
+            var client = new RestClient(URL + "CityApi" + id);
+            var request = new RestRequest(RestSharp.Method.PUT);
+            var response = client.Execute(request);//
             return RedirectToAction("Index");
-        }
-
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing)
-            {
-                db.Dispose();
-            }
-            base.Dispose(disposing);
         }
     }
 }

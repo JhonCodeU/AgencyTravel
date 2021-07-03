@@ -1,4 +1,7 @@
-﻿using System;
+﻿using AgencyLibrary.Models;
+using Newtonsoft.Json;
+using RestSharp;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
@@ -6,19 +9,32 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
-using TravelAgency.Models;
 
 namespace TravelAgency.Controllers
 {
     public class ServiceController : Controller
     {
-        private TravelAgencyDBEntities db = new TravelAgencyDBEntities();
+        private const string URL = "http://localhost:81/servicio_ucaldas/api/";
 
         // GET: Service
+        public Service SearchService(int? id)
+        {
+            var client = new RestClient(URL + "ServiceApi/" + id);
+            var request = new RestRequest(RestSharp.Method.GET);
+            var response = client.Execute(request);
+            var data = response.Content;
+            Service service = JsonConvert.DeserializeObject<Service>(data);
+
+            return service;
+        }
         public ActionResult Index()
         {
-            var services = db.Services.Include(s => s.ServiceType);
-            return View(services.ToList());
+            var client = new RestClient(URL + "ServiceApi/");
+            var request = new RestRequest(RestSharp.Method.GET);
+            var response = client.Execute(request);
+            var data = response.Content;
+            var dataJson = JsonConvert.DeserializeObject<List<Service>>(data);
+            return View(dataJson);
         }
 
         // GET: Service/Details/5
@@ -28,7 +44,7 @@ namespace TravelAgency.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Service service = db.Services.Find(id);
+            Service service = this.SearchService(id);
             if (service == null)
             {
                 return HttpNotFound();
@@ -39,7 +55,7 @@ namespace TravelAgency.Controllers
         // GET: Service/Create
         public ActionResult Create()
         {
-            ViewBag.ServiceType_id = new SelectList(db.ServiceTypes, "id", "name");
+            //ViewBag.ServiceType_id = new SelectList(db.ServiceTypes, "id", "name");
             return View();
         }
 
@@ -52,12 +68,15 @@ namespace TravelAgency.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.Services.Add(service);
-                db.SaveChanges();
+                var client = new RestClient(URL + "ServicesApi");
+                var request = new RestRequest(RestSharp.Method.POST);
+                request.AddHeader("Content-Type", "application/json");
+                request.AddParameter("", JsonConvert.SerializeObject(service), ParameterType.RequestBody);
+                var response = client.Execute(request);//
                 return RedirectToAction("Index");
             }
 
-            ViewBag.ServiceType_id = new SelectList(db.ServiceTypes, "id", "name", service.ServiceType_id);
+            //ViewBag.ServiceType_id = new SelectList(db.ServiceTypes, "id", "name", service.ServiceType_id);
             return View(service);
         }
 
@@ -68,12 +87,12 @@ namespace TravelAgency.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Service service = db.Services.Find(id);
+            Service service = this.SearchService(id);
             if (service == null)
             {
                 return HttpNotFound();
             }
-            ViewBag.ServiceType_id = new SelectList(db.ServiceTypes, "id", "name", service.ServiceType_id);
+            //ViewBag.ServiceType_id = new SelectList(db.ServiceTypes, "id", "name", service.ServiceType_id);
             return View(service);
         }
 
@@ -86,11 +105,13 @@ namespace TravelAgency.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.Entry(service).State = EntityState.Modified;
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                var client = new RestClient(URL + "ServiceApi" + service.id);
+                var request = new RestRequest(RestSharp.Method.PUT);
+                request.AddHeader("Content-Type", "application/json");
+                request.AddParameter("", JsonConvert.SerializeObject(service), ParameterType.RequestBody);
+                var response = client.Execute(request);//
             }
-            ViewBag.ServiceType_id = new SelectList(db.ServiceTypes, "id", "name", service.ServiceType_id);
+            //ViewBag.ServiceType_id = new SelectList(db.ServiceTypes, "id", "name", service.ServiceType_id);
             return View(service);
         }
 
@@ -101,7 +122,7 @@ namespace TravelAgency.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Service service = db.Services.Find(id);
+            Service service = this.SearchService(id);
             if (service == null)
             {
                 return HttpNotFound();
@@ -114,19 +135,10 @@ namespace TravelAgency.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            Service service = db.Services.Find(id);
-            db.Services.Remove(service);
-            db.SaveChanges();
+            var client = new RestClient(URL + "ServiceApi" + id);
+            var request = new RestRequest(RestSharp.Method.PUT);
+            var response = client.Execute(request);//
             return RedirectToAction("Index");
-        }
-
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing)
-            {
-                db.Dispose();
-            }
-            base.Dispose(disposing);
         }
     }
 }
