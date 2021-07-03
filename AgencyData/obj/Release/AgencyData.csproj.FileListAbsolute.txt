@@ -1,4 +1,3 @@
-C:\Users\jhond\source\repos\TravelAgency\AgencyData\bin\Release\AgencyData.dll.config
 C:\Users\jhond\source\repos\TravelAgency\AgencyData\bin\Release\AgencyData.dll
 C:\Users\jhond\source\repos\TravelAgency\AgencyData\bin\Release\AgencyData.pdb
 C:\Users\jhond\source\repos\TravelAgency\AgencyData\bin\Release\EntityFramework.dll
@@ -10,3 +9,4 @@ C:\Users\jhond\source\repos\TravelAgency\AgencyData\obj\Release\AgencyData.cspro
 C:\Users\jhond\source\repos\TravelAgency\AgencyData\obj\Release\AgencyData.csproj.CopyComplete
 C:\Users\jhond\source\repos\TravelAgency\AgencyData\obj\Release\AgencyData.dll
 C:\Users\jhond\source\repos\TravelAgency\AgencyData\obj\Release\AgencyData.pdb
+C:\Users\jhond\source\repos\TravelAgency\AgencyData\bin\Release\AgencyData.dll.config
