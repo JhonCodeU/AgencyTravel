@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="TravelAgencyDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+      <Schema Namespace="TravelAgencyDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Briefcase">
           <Key>
             <PropertyRef Name="id" />
@@ -285,7 +285,8 @@
             <End Role="Travels" EntitySet="Travels" />
           </AssociationSet>
         </EntityContainer>
-      </Schema></edmx:StorageModels>
+      </Schema>
+    </edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="TravelAgencyDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -293,14 +294,24 @@
           <Key>
             <PropertyRef Name="id" />
           </Key>
-          <Property Name="id" Type="Int32" Nullable="false" />
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="name" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
           <Property Name="description" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
           <Property Name="price" Type="Double" />
           <Property Name="city_id" Type="Int32" />
+          <NavigationProperty Name="Briefcase_has_Services" Relationship="Self.FK__Briefcase__Brief__2F10007B" FromRole="Briefcase" ToRole="Briefcase_has_Services" />
           <NavigationProperty Name="City" Relationship="Self.FK__Briefcase__city___4CA06362" FromRole="Briefcase" ToRole="City" />
           <NavigationProperty Name="Travels" Relationship="Self.FK__Travels__briefca__4BAC3F29" FromRole="Briefcase" ToRole="Travels" />
-          <NavigationProperty Name="Services" Relationship="Self.Briefcase_has_Services" FromRole="Briefcase" ToRole="Services" />
+        </EntityType>
+        <EntityType Name="Briefcase_has_Services">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="Briefcase_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Services_id" Type="Int32" Nullable="false" />
+          <Property Name="id" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Briefcase" Relationship="Self.FK__Briefcase__Brief__2F10007B" FromRole="Briefcase_has_Services" ToRole="Briefcase" />
+          <NavigationProperty Name="Service" Relationship="Self.FK__Briefcase__Servi__300424B4" FromRole="Briefcase_has_Services" ToRole="Services" />
         </EntityType>
         <EntityType Name="City">
           <Key>
@@ -367,14 +378,14 @@
           <Property Name="image" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <Property Name="ServiceType_id" Type="Int32" Nullable="false" />
           <Property Name="Price" Type="Double" />
+          <NavigationProperty Name="Briefcase_has_Services" Relationship="Self.FK__Briefcase__Servi__300424B4" FromRole="Services" ToRole="Briefcase_has_Services" />
           <NavigationProperty Name="ServiceType" Relationship="Self.FK__Services__Servic__2C3393D0" FromRole="Services" ToRole="ServiceType" />
-          <NavigationProperty Name="Briefcases" Relationship="Self.Briefcase_has_Services" FromRole="Services" ToRole="Briefcase" />
         </EntityType>
         <EntityType Name="ServiceType">
           <Key>
             <PropertyRef Name="id" />
           </Key>
-          <Property Name="id" Type="Int32" Nullable="false" />
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="name" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="Services" Relationship="Self.FK__Services__Servic__2C3393D0" FromRole="ServiceType" ToRole="Services" />
         </EntityType>
@@ -393,6 +404,18 @@
           <NavigationProperty Name="City1" Relationship="Self.FK__Travels__originC__34C8D9D1" FromRole="Travels" ToRole="City" />
           <NavigationProperty Name="client_has_Travels" Relationship="Self.FK__client_ha__Trave__398D8EEE" FromRole="Travels" ToRole="client_has_Travels" />
         </EntityType>
+        <Association Name="FK__Briefcase__Brief__2F10007B">
+          <End Role="Briefcase" Type="Self.Briefcase" Multiplicity="1" />
+          <End Role="Briefcase_has_Services" Type="Self.Briefcase_has_Services" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Briefcase">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Briefcase_has_Services">
+              <PropertyRef Name="Briefcase_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK__Briefcase__city___4CA06362">
           <End Role="City" Type="Self.City" Multiplicity="0..1" />
           <End Role="Briefcase" Type="Self.Briefcase" Multiplicity="*" />
@@ -414,6 +437,18 @@
             </Principal>
             <Dependent Role="Travels">
               <PropertyRef Name="briefcase_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Briefcase__Servi__300424B4">
+          <End Role="Services" Type="Self.Service" Multiplicity="1" />
+          <End Role="Briefcase_has_Services" Type="Self.Briefcase_has_Services" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Services">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Briefcase_has_Services">
+              <PropertyRef Name="Services_id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -501,12 +536,9 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="Briefcase_has_Services">
-          <End Role="Briefcase" Type="Self.Briefcase" Multiplicity="*" />
-          <End Role="Services" Type="Self.Service" Multiplicity="*" />
-        </Association>
         <EntityContainer Name="TravelAgencyDBEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Briefcases" EntityType="Self.Briefcase" />
+          <EntitySet Name="Briefcase_has_Services" EntityType="Self.Briefcase_has_Services" />
           <EntitySet Name="Cities" EntityType="Self.City" />
           <EntitySet Name="clients" EntityType="Self.client" />
           <EntitySet Name="client_has_Travels" EntityType="Self.client_has_Travels" />
@@ -515,6 +547,10 @@
           <EntitySet Name="Services" EntityType="Self.Service" />
           <EntitySet Name="ServiceTypes" EntityType="Self.ServiceType" />
           <EntitySet Name="Travels" EntityType="Self.Travel" />
+          <AssociationSet Name="FK__Briefcase__Brief__2F10007B" Association="Self.FK__Briefcase__Brief__2F10007B">
+            <End Role="Briefcase" EntitySet="Briefcases" />
+            <End Role="Briefcase_has_Services" EntitySet="Briefcase_has_Services" />
+          </AssociationSet>
           <AssociationSet Name="FK__Briefcase__city___4CA06362" Association="Self.FK__Briefcase__city___4CA06362">
             <End Role="City" EntitySet="Cities" />
             <End Role="Briefcase" EntitySet="Briefcases" />
@@ -522,6 +558,10 @@
           <AssociationSet Name="FK__Travels__briefca__4BAC3F29" Association="Self.FK__Travels__briefca__4BAC3F29">
             <End Role="Briefcase" EntitySet="Briefcases" />
             <End Role="Travels" EntitySet="Travels" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Briefcase__Servi__300424B4" Association="Self.FK__Briefcase__Servi__300424B4">
+            <End Role="Services" EntitySet="Services" />
+            <End Role="Briefcase_has_Services" EntitySet="Briefcase_has_Services" />
           </AssociationSet>
           <AssociationSet Name="FK__City__Department__239E4DCF" Association="Self.FK__City__Department__239E4DCF">
             <End Role="Department" EntitySet="Departments" />
@@ -551,10 +591,6 @@
             <End Role="ServiceType" EntitySet="ServiceTypes" />
             <End Role="Services" EntitySet="Services" />
           </AssociationSet>
-          <AssociationSet Name="Briefcase_has_Services" Association="Self.Briefcase_has_Services">
-            <End Role="Briefcase" EntitySet="Briefcases" />
-            <End Role="Services" EntitySet="Services" />
-          </AssociationSet>
         </EntityContainer>
       </Schema>
     </edmx:ConceptualModels>
@@ -570,6 +606,15 @@
                 <ScalarProperty Name="description" ColumnName="description" />
                 <ScalarProperty Name="price" ColumnName="price" />
                 <ScalarProperty Name="city_id" ColumnName="city_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Briefcase_has_Services">
+            <EntityTypeMapping TypeName="TravelAgencyDBModel.Briefcase_has_Services">
+              <MappingFragment StoreEntitySet="Briefcase_has_Services">
+                <ScalarProperty Name="Briefcase_id" ColumnName="Briefcase_id" />
+                <ScalarProperty Name="Services_id" ColumnName="Services_id" />
+                <ScalarProperty Name="id" ColumnName="id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -655,14 +700,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <AssociationSetMapping Name="Briefcase_has_Services" TypeName="TravelAgencyDBModel.Briefcase_has_Services" StoreEntitySet="Briefcase_has_Services">
-            <EndProperty Name="Briefcase">
-              <ScalarProperty Name="id" ColumnName="Briefcase_id" />
-            </EndProperty>
-            <EndProperty Name="Services">
-              <ScalarProperty Name="id" ColumnName="Services_id" />
-            </EndProperty>
-          </AssociationSetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

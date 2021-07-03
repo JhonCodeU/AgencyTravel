@@ -17,8 +17,8 @@ namespace AgencyData
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Briefcase()
         {
+            this.Briefcase_has_Services = new HashSet<Briefcase_has_Services>();
             this.Travels = new HashSet<Travel>();
-            this.Services = new HashSet<Service>();
         }
     
         public int id { get; set; }
@@ -27,10 +27,10 @@ namespace AgencyData
         public Nullable<double> price { get; set; }
         public Nullable<int> city_id { get; set; }
     
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Briefcase_has_Services> Briefcase_has_Services { get; set; }
         public virtual City City { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Travel> Travels { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Service> Services { get; set; }
     }
 }

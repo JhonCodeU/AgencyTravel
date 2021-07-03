@@ -17,7 +17,7 @@ namespace AgencyData
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Service()
         {
-            this.Briefcases = new HashSet<Briefcase>();
+            this.Briefcase_has_Services = new HashSet<Briefcase_has_Services>();
         }
     
         public int id { get; set; }
@@ -27,8 +27,8 @@ namespace AgencyData
         public int ServiceType_id { get; set; }
         public Nullable<double> Price { get; set; }
     
-        public virtual ServiceType ServiceType { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Briefcase> Briefcases { get; set; }
+        public virtual ICollection<Briefcase_has_Services> Briefcase_has_Services { get; set; }
+        public virtual ServiceType ServiceType { get; set; }
     }
 }

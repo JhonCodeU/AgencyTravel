@@ -14,7 +14,7 @@ namespace TravelAgency.Controllers
 {
     public class BriefcaseController : Controller
     {
-        private const string URL = "http://localhost:81/servicio_ucaldas/api/";
+        private const string URL = "http://localhost-webservices.com/api/";
         // GET: Briefcase
 
         public Briefcase SearchBriefcase(int? id)

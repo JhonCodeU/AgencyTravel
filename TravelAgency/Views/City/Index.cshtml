@@ -1,4 +1,4 @@
-﻿@model IEnumerable<TravelAgency.Models.City>
+﻿@model IEnumerable<AgencyLibrary.Models.City>
 
 @{
     ViewBag.Title = "Index";
@@ -18,7 +18,7 @@
             @Html.DisplayNameFor(model => model.description)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Department.name)
+            @Html.DisplayNameFor(model => model.Department_id)
         </th>
         <th></th>
     </tr>
@@ -32,7 +32,7 @@
             @Html.DisplayFor(modelItem => item.description)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.Department.name)
+            @Html.DisplayFor(modelItem => item.Department_id)
         </td>
         <td>
             @Html.ActionLink("Edit", "Edit", new { id=item.id }) |

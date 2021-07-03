@@ -168,7 +168,7 @@
     <Compile Include="Controllers\Client_has_TravelApiController.cs" />
     <Compile Include="Controllers\CountryApiController.cs" />
     <Compile Include="Controllers\DepartmentApiController.cs" />
-    <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\HomeWebController.cs" />
     <Compile Include="Controllers\ServiceApiController.cs" />
     <Compile Include="Controllers\ServiceTypeApiController.cs" />
     <Compile Include="Controllers\TravelApiController.cs" />
@@ -225,7 +225,7 @@
     <Content Include="Content\Site.css" />
     <Content Include="Views\Web.config" />
     <Content Include="Views\_ViewStart.cshtml" />
-    <Content Include="Views\Home\Index.cshtml" />
+    <Content Include="Views\HomeWeb\Index.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
   </ItemGroup>

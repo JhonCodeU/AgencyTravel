@@ -14,7 +14,7 @@ namespace TravelAgency.Controllers
 {
     public class Client_has_TravelController : Controller
     {
-        private const string URL = "http://localhost:81/servicio_ucaldas/api/";
+        private const string URL = "http://localhost-webservices.com/api/";
         // GET: Client_has_Travel
         public Client_Has_Travels SearchClient(int? id)
         {

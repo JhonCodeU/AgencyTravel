@@ -18,6 +18,8 @@ namespace AgencyData
         public TravelAgencyDBEntities()
             : base("name=TravelAgencyDBEntities")
         {
+            this.Configuration.LazyLoadingEnabled = false;
+            this.Configuration.ProxyCreationEnabled = false;
         }
     
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
@@ -26,6 +28,7 @@ namespace AgencyData
         }
     
         public virtual DbSet<Briefcase> Briefcases { get; set; }
+        public virtual DbSet<Briefcase_has_Services> Briefcase_has_Services { get; set; }
         public virtual DbSet<City> Cities { get; set; }
         public virtual DbSet<client> clients { get; set; }
         public virtual DbSet<client_has_Travels> client_has_Travels { get; set; }

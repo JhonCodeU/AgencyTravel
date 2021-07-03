@@ -6,7 +6,7 @@ using System.Web.Mvc;
 
 namespace WebServiceAgency.Controllers
 {
-    public class HomeController : Controller
+    public class HomeWebController : Controller
     {
         public ActionResult Index()
         {
